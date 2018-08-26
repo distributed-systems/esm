@@ -8,22 +8,27 @@ export default class Command {
         name,
         parser,
         cli,
-        output,
     }) {
         this.name = name;
         this.parser = parser;
         this.cli = cli;
-        this.output = output;
-
-        this.subCommands = new Map();
     }
 
+
+    /**
+    * hides the command from the auto completion and the 
+    * help command if set tot true
+    */
+    isHidden() {
+        return false;
+    }
 
 
 
     setName(name) {
         this.name = name;
     }
+
 
 
     getName() {
