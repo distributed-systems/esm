@@ -15,9 +15,8 @@ section('ESM CLI', (section) => {
         section.test('Execute the CLI without command', async () => {
             const args = [];
             const cli = new CLI({args});
-            const err = await cli.execute().catch(err => Promise.resolve(err));
-            assert(err);
-            assert.equal(err.message, `Please specify a command!`);
+            const help = await cli.execute();
+            assert(help);
         });
 
 
