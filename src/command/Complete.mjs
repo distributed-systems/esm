@@ -15,11 +15,26 @@ export default class CompleteCommand extends Command {
     }
 
 
+
+    /**
+    * hides the commadn from the autocompletion and the help command
+    */
+    isHidden() {
+        return true;
+    }
+
+
+
     /**
     * get command help information
     */
-    help() {
-        
+    getHelp() {
+        return {
+            syntax: `esm complete wordIndex, line, [word...]`,
+            short: `gathers auto complete infromation for bash`,
+            description: ``,
+            examples: []
+        }
     }
 
 
@@ -38,16 +53,19 @@ export default class CompleteCommand extends Command {
     */
     async execute() {
         if (this.parser.getWordIndex() === 1) {
-            const commands = [...this.cli.getCommands().keys()];
-            const completions = this.parser.getCompletion(commands, true);
-            process.stdout.write(completions);
+            const commands = this.cli.getCommands();
+            const commandKeys = [...this.cli.getCommands().values()].filter((command) => {
+                return !command.isHidden();
+            }).map(command => command.getName());
+
+            return this.parser.getCompletion(commandKeys, true);
         } else {
             const commandName = this.parser.getWordAtIndex(1);
             const command = this.cli.getCommand(commandName);
             const completionValues = await command.getCompletion(this.parser.getWords().slice(1), this.parser.getWordIndex()-1);
 
             if (completionValues) {
-                process.stdout.write(completionValues);
+                return completionValues;
             }
         }
     }

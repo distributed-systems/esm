@@ -4,15 +4,14 @@
 import Command from '../Command.mjs';
 import path from 'path';
 import fs from 'fs';
-import{promisify} from 'util';
 
 
-const stat = promisify(fs.stat);
+const {promises: {stat}} = fs;
 
 
 
 export default class LinkCommand extends Command {
-     constructor(options) {
+    constructor(options) {
         super(options);
 
         this.setName('link');
@@ -22,8 +21,16 @@ export default class LinkCommand extends Command {
     /**
     * get command help information
     */
-    help() {
-        
+    getHelp() {
+        return {
+            syntax: `esm link source-path`,
+            short: `links the dependency from source-path to the current projects es-modules folder`,
+            description: ``,
+            examples: [{
+                syntax: `esm link ../http2-server`,
+                short: `links the http2-server library to the current projects esm folder`,
+            }]
+        }
     }
 
 
