@@ -81,7 +81,7 @@ export default class LinkCommand extends Command {
 
             for (const command of commands) {
                 const helpInfo = command.getHelp();
-                text.push(this.blue(this.padRight(helpInfo.syntax, 40))+helpInfo.short);
+                text.push(this.blue(this.padRight(helpInfo.syntax, 36))+helpInfo.short);
             }
         }
 
@@ -122,7 +122,7 @@ Registry: \u{1b}[0;34mhttps://es-modules.co/\u{1b}[0m
 API (http2 only): \u{1b}[0;34mhttps://api.es-modules.co/\u{1b}[0m
 
 \u{1b}[0;2m
-ESM organizes your modules and its dependecies in a flat structure.
+ESM organizes your modules and its dependencies in a flat structure.
 You always know where to find your modules.
 
 my-winning-project/
