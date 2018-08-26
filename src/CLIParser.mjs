@@ -20,8 +20,8 @@ export default class CLIParser {
     /**
     * do path auto completions
     */
-    async getPathCompletion(input, onlyFolders = false) {
-        const basePath = input.includes('/') ? (input.endsWith('/') ? input : path.dirname(input)+'/') : '';
+    async getPathCompletion(input, onlyFolders = false) {// console.log(`xx${input}xx`)
+        const basePath = input.includes('/') ? (input.endsWith('/') ? input : path.dirname(input)+(path.dirname(input).endsWith('/') ? '' : '/')) : '';
 
         // get an absolute path
         if (!input.startsWith('/')) {
@@ -50,7 +50,7 @@ export default class CLIParser {
         files = files.filter(file => file !== null).map((file) => {
             return basePath+file;
         });
-
+        //console.log(files.join('=='), `0>${basePath}<0`);
         return this.getCompletion(files);
     }
 
