@@ -130,14 +130,14 @@ my-winning-project/
 │   ├── vendor
 │   │   └── package
 │   │       └── version
-│   │           └── es-modules -> ../../../../
+│   │           └── es-modules -> ../../../
 │   └── distributed-systems
 │       └── http2-server
 │           ├── x -> ../2.3.19
 │           ├── 2.x -> ../2.3.19
 │           ├── 2.3.x -> ../2.3.19
 │           └── 2.3.19
-│               ├── es-modules -> ../../../../
+│               ├── es-modules -> ../../../
 │               └── src
 │                   ├── HTT2Server.mjs
 │                   ├── Response.mjs

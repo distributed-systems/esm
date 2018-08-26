@@ -16,7 +16,7 @@ Configuration files are stored in /home/ee/.esm
 - API (http2 only): https://api.es-modules.co/
 
 
-ESM organizes your modules and its dependecies in a flat structure.
+ESM organizes your modules and its dependencies in a flat structure.
 You always know where to find your modules.
 
 ```bash
@@ -25,14 +25,14 @@ my-winning-project/
 │   ├── vendor
 │   │   └── package
 │   │       └── version
-│   │           └── es-modules -> ../../../../
+│   │           └── es-modules -> ../../../
 │   └── distributed-systems
 │       └── http2-server
 │           ├── x -> ../2.3.19
 │           ├── 2.x -> ../2.3.19
 │           ├── 2.3.x -> ../2.3.19
 │           └── 2.3.19
-│               ├── es-modules -> ../../../../
+│               ├── es-modules -> ../../../
 │               └── src
 │                   ├── HTT2Server.mjs
 │                   ├── Response.mjs
