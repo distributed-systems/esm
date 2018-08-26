@@ -125,10 +125,10 @@ API (http2 only): \u{1b}[0;34mhttps://api.es-modules.co/\u{1b}[0m
 ESM organizes your modules and its dependencies in a flat structure.
 You always know where to find your modules.
 
-my-winning-project/
-├── es-modules/
+my-winning-project
+├── es-modules
 │   ├── vendor
-│   │   └── package
+│   │   └── module
 │   │       └── version
 │   │           └── es-modules -> ../../../
 │   └── distributed-systems

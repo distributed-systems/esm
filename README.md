@@ -20,10 +20,10 @@ ESM organizes your modules and its dependencies in a flat structure.
 You always know where to find your modules.
 
 ```bash
-my-winning-project/
-├── es-modules/
+my-winning-projects
+├── es-modules
 │   ├── vendor
-│   │   └── package
+│   │   └── module
 │   │       └── version
 │   │           └── es-modules -> ../../../
 │   └── distributed-systems
