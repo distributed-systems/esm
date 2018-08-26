@@ -15,7 +15,6 @@ class ESM {
 
 
 
-
     /**
     * executes the cli
     */
@@ -33,10 +32,6 @@ class ESM {
         const cli = new CLIConstructor();
         return await cli.execute();
     }
-
-
-
-
 
 
 
@@ -60,7 +55,10 @@ class ESM {
     await esm.prepare();
 
     // run the cli
-    await esm.execute();
+    const result = await esm.execute();
+
+    if (typeof result === 'string') process.stdout.write(result);
 })().catch((err) => {
-    console.error(err);
+    console.error(err.message);
+    process.exit(err.exitCode || 1);
 });
