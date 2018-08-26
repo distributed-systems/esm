@@ -2,25 +2,42 @@
 
 import path from 'path';
 import fs from 'fs';
-import{promisify} from 'util';
+
+
+const {promises: {readdir, stat}} = fs;
 
 
 
-const readdir = promisify(fs.readdir);
-const stat = promisify(fs.stat);
-
+/**
+* The CLIParser class is used to handle command line 
+* interface related parsing jobs like getting the 
+* command to be executed and the bash completion
+*/
 
 
 export default class CLIParser {
-    constructor() {
 
+    /**
+    * @param {array} [args=process.argv]       command line parameters
+    */
+    constructor({
+        args = process.argv
+    } = {}) {
+        this.args = args;
     }
 
 
+
+
     /**
-    * do path auto completions
+    * do bash path completions based on the users input
+    *
+    * @param {string} input                 the users input that shall be auto completed
+    * @param {boolean} [onlyFolders=false]  set to true if only folders shall be auto completed  
+    *
+    * @returns {string} a line separated list of options available to the user
     */
-    async getPathCompletion(input, onlyFolders = false) {// console.log(`xx${input}xx`)
+    async getPathCompletion(input, onlyFolders = false) {
         const basePath = input.includes('/') ? (input.endsWith('/') ? input : path.dirname(input)+(path.dirname(input).endsWith('/') ? '' : '/')) : '';
 
         // get an absolute path
@@ -47,60 +64,74 @@ export default class CLIParser {
             }
         }
 
+        // return full paths
         files = files.filter(file => file !== null).map((file) => {
             return basePath+file;
         });
-        //console.log(files.join('=='), `0>${basePath}<0`);
+
+        // filter & convert array to line separated items
         return this.getCompletion(files);
     }
 
 
+
+
     /**
-    * returns the first argumetn passed to esm, which is the command 
+    * returns the first argument passed to esm, which is the command 
     * to execute
     */
     getCommand() {
-        return process.argv[2];
+        return this.args[2];
     }
+
+
 
 
     /**
     * get the word at a specific index, starting after the command
     */
     getWordAtIndex(index) {
-        return process.argv[5+index];
+        return this.args[5+index];
     }
+
 
 
     /**
     * get the current word index
     */
     getWordIndex() {
-        return parseInt(process.argv[3], 10);
+        return parseInt(this.args[3], 10);
     }
+
+
 
     /**
     * get the command line
     */
     getLine() {
-        return process.argv[4];
+        return this.args[4];
     }
+
+
 
     /**
     * get all words
     */
     getWords() {
-        return process.argv.slice(6);
+        return this.args.slice(6);
     }
+
 
 
     /**
     * return all arguments after the command
     */
     getArguments(index) {
-        if (index !== undefined) return process.argv[3+index];
-        else return process.argv.slice(3);
+        if (index !== undefined) return this.args[3+index];
+        else return this.args.slice(3);
     }
+
+
 
 
     /**
@@ -110,7 +141,6 @@ export default class CLIParser {
     getCompletion(options = [], addSpace) {
         const items = this.getWords();
         const filterString = items[items.length -1];
-
         if (addSpace) options = options.map(option => option+=' ');
 
         return filterString.length ? options.filter(word => word.startsWith(filterString)).join('\n') : options.join('\n');;
