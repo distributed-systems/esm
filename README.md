@@ -2,21 +2,24 @@
 
 the es-modules command line interface
 
-Syntax: esm <command>
+```bash
+esm <command>
+```
 
 Commands:
-esm help [command]                      shows help information for esm or one of its commands
-esm link source-path                    links the dependency from source-path to the current projects es-modules folder
+- esm help [command]                      shows help information for esm or one of its commands
+- esm link source-path                    links the dependency from source-path to the current projects es-modules folder
 
 Configuration files are stored in /home/ee/.esm
 
-Registry: https://es-modules.co/
-API (http2 only): https://api.es-modules.co/
+- Registry: https://es-modules.co/
+- API (http2 only): https://api.es-modules.co/
 
 
 ESM organizes your modules and its dependecies in a flat structure.
 You always know where to find your modules.
 
+```bash
 my-winning-project/
 ├── es-modules/
 │   ├── vendor
@@ -37,3 +40,4 @@ my-winning-project/
 ├── src
 │   └── MyModule.mjs
 └── module.yml
+```
