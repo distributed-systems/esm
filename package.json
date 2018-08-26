@@ -1,0 +1,22 @@
+{
+  "name": "esm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --no-warnings --experimental-modules ./node_modules/.bin/section ./test/*.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eventEmitter/esm.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eventEmitter/esm/issues"
+  },
+  "homepage": "https://github.com/eventEmitter/esm#readme",
+  "devDependencies": {
+    "section-tests": "^2.2.1"
+  }
+}
