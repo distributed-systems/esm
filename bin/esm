@@ -1,2 +1,2 @@
-#!/bin/sh
-exec /usr/bin/env node --experimental-modules --no-warnings "$0.mjs" "$@"
+#!/usr/bin/env bash
+exec /usr/bin/env node --experimental-modules --no-warnings "${0//esm/_esm.mjs}" "$@"
