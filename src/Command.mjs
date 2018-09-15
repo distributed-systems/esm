@@ -8,11 +8,14 @@ export default class Command {
         name,
         parser,
         cli,
+        httpClient,
     }) {
         this.name = name;
         this.parser = parser;
         this.cli = cli;
+        this.httpClient = httpClient;
     }
+
 
 
     /**

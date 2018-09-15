@@ -145,6 +145,7 @@ my-winning-project
 ├── src
 │   └── MyModule.mjs
 └── module.yml
-\u{1b}[0m`;
+\u{1b}[0m
+`;
     }
 }   

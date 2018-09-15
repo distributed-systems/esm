@@ -9,7 +9,7 @@ class ESM {
 
     constructor() {
         this.installationDir = path.join(os.homedir(), '.esm');
-        this.cliPath = path.join(this.installationDir, 'src/CLI.mjs');
+        this.cliPath = path.join(this.installationDir, 'esm/src/CLI.mjs');
     }
 
 
@@ -60,5 +60,6 @@ class ESM {
     if (typeof result === 'string') process.stdout.write(result);
 })().catch((err) => {
     console.error(err.message);
+    console.log(err);
     process.exit(err.exitCode || 1);
 });

@@ -1,9 +1,9 @@
-'use strict';
-
 import CLIParser from './CLIParser.mjs';
 import CompleteCommand from './command/Complete.mjs';
 import LinkCommand from './command/Link.mjs';
 import HelpCommand from './command/Help.mjs';
+import TestCommand from './command/Test.mjs';
+import path from 'path';
 
 
 
@@ -25,6 +25,7 @@ export default class CLI {
     } = {}) {
         this.args = args;
         this.parser = new CLIParser({args});
+        this.rootDir = path.join(path.dirname(new URL(import.meta.url).pathname), '../');
 
         this.setUpCommands();
     }
@@ -42,6 +43,7 @@ export default class CLI {
             CompleteCommand, 
             LinkCommand,
             HelpCommand,
+            TestCommand,
         ].forEach((CommandConstructor) => {
             const instance = new CommandConstructor({
                 parser: this.parser,
@@ -87,9 +89,14 @@ export default class CLI {
         if (!command) {
             return await this.commands.get('help').execute();
         } else if (this.commands.has(command)) {
-            return await this.commands.get(command).execute();
+            const commandInstance = this.commands.get(command);
+
+            // some commands need some extra loading of data
+            await commandInstance.load();
+
+            return await commandInstance.execute();
         } else {
             throw new Error(`Unknown command '${command}'!`);
         }
     }
-}   
+}
