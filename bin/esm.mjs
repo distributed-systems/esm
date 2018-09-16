@@ -60,6 +60,5 @@ class ESM {
     if (typeof result === 'string') process.stdout.write(result);
 })().catch((err) => {
     console.error(err.message);
-    console.log(err);
     process.exit(err.exitCode || 1);
 });

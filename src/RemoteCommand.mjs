@@ -36,17 +36,53 @@ export default class RemoteCommand extends Command {
 
 
 
+
+    async end() {
+        await this.httpClient.end();
+    }
+
+
+
+
+    /**
+     * checks if the esm server is online in order to prevent process creation
+     *
+     * @return     {Promise}  true if the server is online, false otherwise
+     */
+    async probeServer() {
+        try {
+            const response = await this.httpClient
+                .get(`/esm-status`)
+                .send();
+
+            if (response && response.status(200)) {
+                const data = await response.getData();
+                return data && data.loaded;
+            } else return false;
+        } catch(e) {
+            return false;
+        }
+    }
+
+
+
+
     /**
      * make sure the esm server is running
      *
      * @return     {Promise}  undefined
      */
     async startServer() {
-        return new Promise((resolve, reject) => {
-            exec('esm-server', (err) => {
-                if (err) reject(err);
-                else resolve();
-            })
-        });
+        const isRunning = await this.probeServer();
+
+        if (!isRunning) {
+            return new Promise((resolve, reject) => {
+                exec('esm-server', (err, stdout, stderr) => {
+                    // console.log(err, stdout, stderr);
+                    if (err) reject(err);
+                    else resolve();
+                })
+            });
+        }
     }
 }

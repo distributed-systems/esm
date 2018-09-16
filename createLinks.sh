@@ -56,7 +56,7 @@ mkdir "$dsDir/esm-server/es-modules/distributed-systems/esm-yaml"
 ln -s "$dsDir/esm-yaml" "$dsDir/esm-server/es-modules/distributed-systems/esm-yaml/x"
 
 mkdir "$dsDir/esm-server/es-modules/distributed-systems/section-tests"
-ln -s "$dsDir/esm-yaml" "$dsDir/esm-server/es-modules/distributed-systems/section-tests/x"
+ln -s "$dsDir/section-tests" "$dsDir/esm-server/es-modules/distributed-systems/section-tests/x"
 
 
 

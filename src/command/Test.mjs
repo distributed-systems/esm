@@ -2,9 +2,7 @@ import RemoteCommand from '../RemoteCommand.mjs';
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
-
-
-const {promises: {stat}} = fs;
+import { spawn } from 'child_process';
 
 
 
@@ -54,15 +52,47 @@ export default class LinkCommand extends RemoteCommand {
     async execute() {
         await this.startServer();
 
-        const reponse = await this.httpClient
+        const response = await this.httpClient
             .get('/module-yml')
             .setHeader('module', process.cwd())
             .setHeader('key', 'commands.test')
-            .expect(200)
-            .send();
+            .send().catch(console.log);
 
-        const data = await reponse.getData();
+        const data = await response.getData();
 
-        console.log(data);
+        if (response.status(404)) {
+            console.warn(data.message);
+        } else if (response.status(200)) {
+            await this.runTest(data.value);
+        } else {
+            console.log(data);
+            throw new Error(`The server returned an unknown status ${response.status()}: ${data.message}`);
+        }
+    }
+
+
+
+
+    /**
+     * execute the test
+     *
+     * @param      {string}   testCommand  The test command
+     * @return     {Promise}  undefined
+     */
+    async runTest(testCommand) {
+        return new Promise((resolve, reject) => {
+            const command = testCommand.substr(0, testCommand.indexOf(' '));
+            const args = testCommand.substr(testCommand.indexOf(' ')+1).split(' ');
+
+            console.log(`esm test: ${testCommand}`);
+
+            const child = spawn(command, args, {
+                cwd: process.cwd(),
+                env: process.evn,
+                stdio: 'inherit'
+            });
+
+            child.on('exit', resolve);
+        });
     }
 }   

@@ -33,6 +33,10 @@ export default class Command {
     }
 
 
+    async load() {}
+    async end() {}
+
+
 
     getName() {
         return this.name;

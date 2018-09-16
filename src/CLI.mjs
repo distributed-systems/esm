@@ -1,9 +1,12 @@
 import CLIParser from './CLIParser.mjs';
-import CompleteCommand from './command/Complete.mjs';
-import LinkCommand from './command/Link.mjs';
-import HelpCommand from './command/Help.mjs';
-import TestCommand from './command/Test.mjs';
 import path from 'path';
+
+import CompleteCommand from './command/Complete.mjs';
+import HelpCommand from './command/Help.mjs';
+import LinkCommand from './command/Link.mjs';
+import NPMConvertCommand from './command/NPMConvert.mjs';
+import TestCommand from './command/Test.mjs';
+
 
 
 
@@ -41,8 +44,9 @@ export default class CLI {
 
         [
             CompleteCommand, 
-            LinkCommand,
             HelpCommand,
+            LinkCommand,
+            NPMConvertCommand,
             TestCommand,
         ].forEach((CommandConstructor) => {
             const instance = new CommandConstructor({
@@ -94,7 +98,11 @@ export default class CLI {
             // some commands need some extra loading of data
             await commandInstance.load();
 
-            return await commandInstance.execute();
+            const result = await commandInstance.execute();
+
+            await commandInstance.end();
+
+            return result;
         } else {
             throw new Error(`Unknown command '${command}'!`);
         }
