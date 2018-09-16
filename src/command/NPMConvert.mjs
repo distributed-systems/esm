@@ -21,7 +21,7 @@ export default class NPMConvertCommand extends RemoteCommand {
         super(options);
 
         // regular expression used to convert imports
-        this.reg = /(?<prefix>import\s+[^ ]+\s+from\s+['"])[^'"]+(es-modules\/)(?<vendor>[^\/'"]+)\/(?:@(?<npmVendor>[^\/"'+]+)\+(?<npmPackage>[^\/"']+)|(?<moduleName>[^\/'"]+))\/(?<version>[^\/'"]+)\/(?<file>[^'"]+)(?<quote>['"])/gi;
+        this.reg = /(?<prefix>import\s+[\{\},\sa-z0-9_@]+\s+from\s+['"])[^'"]+(es-modules\/)(?<vendor>[^\/'"]+)\/(?:@(?<npmVendor>[^\/"'+]+)\+(?<npmPackage>[^\/"']+)|(?<moduleName>[^\/'"]+))\/(?<version>[^\/'"]+)\/(?<file>[^'"]+)(?<quote>['"])/gi;
 
         this.setName('npm-convert');
     }
@@ -380,6 +380,7 @@ export default class NPMConvertCommand extends RemoteCommand {
                 }
             }
 
+            if (file) replacement += '/' + file;
             replacement += quote;
 
             console.log(`   ▶ ${this.blue(result[0].substr(prefix.length-1))} => ${this.orange(replacement.substr(prefix.length-1))}`);

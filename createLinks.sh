@@ -89,10 +89,10 @@ ln -s "$dsDir/http2-lib" "$dsDir/http2-client/es-modules/distributed-systems/htt
 
 # http2-lib
 rm -r "$dsDir/http2-lib/es-modules"
-mkdir -p "$dsDir/http2-lib/es-modules/ee"
-mkdir "$dsDir/http2-lib/es-modules/ee/types"
+mkdir -p "$dsDir/http2-lib/es-modules/distributed-systems"
+mkdir "$dsDir/http2-lib/es-modules/distributed-systems/types"
 
-ln -s "$eeDir/ee-types" "$dsDir/http2-lib/es-modules/ee/types/x"
+ln -s "$dsDir/types" "$dsDir/http2-lib/es-modules/distributed-systems/types/1.x"
 
 
 
