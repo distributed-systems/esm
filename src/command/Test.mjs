@@ -6,6 +6,9 @@ import { spawn } from 'child_process';
 
 
 
+/**
+ * executes the test command configured in the module.yml
+ */
 export default class LinkCommand extends RemoteCommand {
      constructor(options) {
         super(options);
@@ -47,7 +50,7 @@ export default class LinkCommand extends RemoteCommand {
 
 
     /**
-    * link the target module into the target module
+    * run the test command
     */
     async execute() {
         await this.startServer();
@@ -56,7 +59,7 @@ export default class LinkCommand extends RemoteCommand {
             .get('/module-yml')
             .setHeader('module', process.cwd())
             .setHeader('key', 'commands.test')
-            .send().catch(console.log);
+            .send();
 
         const data = await response.getData();
 

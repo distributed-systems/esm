@@ -1,8 +1,8 @@
-'use strict';
 
 
-
-
+/**
+ * basic abstraction for creating commands
+ */
 export default class Command {
     constructor({
         name,
@@ -28,17 +28,42 @@ export default class Command {
 
 
 
+    /**
+     * sets the commands name
+     *
+     * @param      {string}  name    The name
+     */
     setName(name) {
         this.name = name;
     }
 
 
-    async load() {}
-    async end() {}
 
-
-
+    /**
+     * returns the commands name
+     *
+     * @return     {string}  The name.
+     */
     getName() {
         return this.name;
     }
+
+
+
+    /**
+     * the load method call is executed before the command is executed, this
+     * allows it to load additional required data
+     *
+     * @return     {Promise}  { description_of_the_return_value }
+     */
+    async load() {}
+
+
+
+    /**
+     * lets you terminate stuff after the command was executed
+     *
+     * @return     {Promise}  { description_of_the_return_value }
+     */
+    async end() {}
 }

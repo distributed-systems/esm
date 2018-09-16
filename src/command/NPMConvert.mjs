@@ -60,7 +60,7 @@ export default class NPMConvertCommand extends RemoteCommand {
 
 
     /**
-    * get the configuration, convert the sources
+    * get the configuration, convert the sources to a npm compatible format
     */
     async execute() {
         await this.startServer();

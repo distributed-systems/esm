@@ -21,11 +21,11 @@ section('ESM CLI', (section) => {
 
 
         section.test('Execute the CLI with an invalid command', async () => {
-            const args = [1,2,'test'];
+            const args = [1,2,'jona is my name'];
             const cli = new CLI({args});
             const err = await cli.execute().catch(err => Promise.resolve(err));
             assert(err);
-            assert.equal(err.message, `Unknown command 'test'!`);
+            assert.equal(err.message, `Unknown command 'jona is my name'!`);
         });
     });
 });

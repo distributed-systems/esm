@@ -100,6 +100,7 @@ export default class CLI {
 
             const result = await commandInstance.execute();
 
+            // let the command shut down resources after use
             await commandInstance.end();
 
             return result;
