@@ -380,7 +380,9 @@ export default class NPMConvertCommand extends RemoteCommand {
                 }
             }
 
-            if (file) replacement += '/' + file;
+            if (file && file !== 'index.mjs' && file !== 'index.js') {
+                replacement += '/' + file;
+            }
             replacement += quote;
 
             console.log(`   ▶ ${this.blue(result[0].substr(prefix.length-1))} => ${this.orange(replacement.substr(prefix.length-1))}`);

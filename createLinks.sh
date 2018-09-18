@@ -74,17 +74,24 @@ ln -s "$dsDir/http2-client" "$dsDir/esm/es-modules/distributed-systems/http2-cli
 # http2-server
 rm -r "$dsDir/http2-server/es-modules"
 mkdir -p "$dsDir/http2-server/es-modules/distributed-systems"
-mkdir "$dsDir/http2-server/es-modules/distributed-systems/http2-lib"
 
+mkdir "$dsDir/http2-server/es-modules/distributed-systems/http2-lib"
 ln -s "$dsDir/http2-lib" "$dsDir/http2-server/es-modules/distributed-systems/http2-lib/x"
+
+mkdir "$dsDir/http2-server/es-modules/distributed-systems/http2-client"
+ln -s "$dsDir/http2-client" "$dsDir/http2-server/es-modules/distributed-systems/http2-client/x"
+
 
 
 # http2-client
 rm -r "$dsDir/http2-client/es-modules"
 mkdir -p "$dsDir/http2-client/es-modules/distributed-systems"
-mkdir "$dsDir/http2-client/es-modules/distributed-systems/http2-lib"
 
+mkdir "$dsDir/http2-client/es-modules/distributed-systems/http2-lib"
 ln -s "$dsDir/http2-lib" "$dsDir/http2-client/es-modules/distributed-systems/http2-lib/x"
+
+mkdir "$dsDir/http2-client/es-modules/distributed-systems/http2-server"
+ln -s "$dsDir/http2-server" "$dsDir/http2-client/es-modules/distributed-systems/http2-server/x"
 
 
 # http2-lib
