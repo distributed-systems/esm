@@ -51,34 +51,24 @@ export default class LinkCommand extends RemoteCommand {
     async execute() {
         await this.startServer();
 
-        const userPath = this.parser.getArguments(0) || ''; 
+        let userPath = this.parser.getArguments(0) || '';
+        if (userPath.endsWith(path.sep)) userPath = userPath.substr(0, userPath.length - 1);
+
         const targetPath = userPath.startsWith('/') ? userPath : path.join(process.cwd(), userPath);
         const stats = await stat(targetPath);
 
 
         if (stats.isDirectory()) {
             const response = await this.httpClient
-                .get('/module-yml')
-                .expect(200, 404)
-                .setHeader('module', targetPath)
-                .setHeader('key', 'name')
-                .send();
+                .post('/link')
+                .expect(201)
+                .send({
+                    linkFrom: path.normalize(targetPath),
+                    linkTo: path.normalize(process.cwd()),
+                });
 
+            const data = await response.getData();
 
-            if (response.status(200)) {
-                const response = await this.httpClient
-                    .post('/link')
-                    .expect(201)
-                    .send({
-                        module: targetPath,
-                    });
-
-                const data = await response.getData();
-
-            } else {
-                const data = await response.getData();
-                throw new Error(data.message);
-            }
         } else {
             throw new Error(`Cannot link '${sourcePaths}': path is not a directory!`);
         }
