@@ -1,4 +1,4 @@
-import Command from '../Command.mjs';
+import RemoteCommand from '../RemoteCommand.mjs';
 import path from 'path';
 import fs from 'fs';
 
@@ -7,7 +7,7 @@ const { promises: { stat } } = fs;
 
 
 
-export default class LinkCommand extends Command {
+export default class LinkCommand extends RemoteCommand {
     constructor(options) {
         super(options);
 
@@ -44,33 +44,43 @@ export default class LinkCommand extends Command {
 
 
 
-    /**
-     * make sure the esm server is running
-     *
-     * @return     {Promise}  undefined
-     */
-    async startServer() {
-        return new Promise((resolve, reject) => {
-            exec('esm-server', (err) => {
-                if (err) reject(err);
-                else resolve();
-            })
-        });
-    }
-
-
-
 
     /**
     * link the target module into the target module
     */
     async execute() {
-        const userPath = this.parser.getArguments(0) || ''; 
-        const sourcePath = userPath.startsWith('/') ? userPath : path.join(process.cwd(), userPath);
-        const stats = await stat(sourcePath);
-
         await this.startServer();
 
-        console.log(stats, sourcePath);
+        const userPath = this.parser.getArguments(0) || ''; 
+        const targetPath = userPath.startsWith('/') ? userPath : path.join(process.cwd(), userPath);
+        const stats = await stat(targetPath);
+
+
+        if (stats.isDirectory()) {
+            const response = await this.httpClient
+                .get('/module-yml')
+                .expect(200, 404)
+                .setHeader('module', targetPath)
+                .setHeader('key', 'name')
+                .send();
+
+
+            if (response.status(200)) {
+                const response = await this.httpClient
+                    .post('/link')
+                    .expect(201)
+                    .send({
+                        module: targetPath,
+                    });
+
+                const data = await response.getData();
+
+            } else {
+                const data = await response.getData();
+                throw new Error(data.message);
+            }
+        } else {
+            throw new Error(`Cannot link '${sourcePaths}': path is not a directory!`);
+        }
     }
 }   
