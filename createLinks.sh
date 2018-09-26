@@ -103,6 +103,13 @@ ln -s "$dsDir/types" "$dsDir/http2-lib/es-modules/distributed-systems/types/1.x"
 
 
 
+# http2-component-directory-server
+rm -r "$dsDir/http2-component-directory-server/es-modules"
+mkdir -p "$dsDir/http2-component-directory-server/es-modules/distributed-systems"
+
+mkdir "$dsDir/http2-component-directory-server/es-modules/distributed-systems/http2-server"
+ln -s "$dsDir/http2-server" "$dsDir/http2-component-directory-server/es-modules/distributed-systems/http2-server/x"
+
 
 # bash completion
 
