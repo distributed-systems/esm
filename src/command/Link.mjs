@@ -21,7 +21,7 @@ export default class LinkCommand extends RemoteCommand {
     getHelp() {
         return {
             syntax: `esm link source-path`,
-            short: `links the dependency from source-path to the current projects es-modules folder`,
+            short: `links the dependency from source-path to the current project. Links just the version specicifed in the source-path and semver compatible versions, nothitng else.`,
             description: ``,
             examples: [{
                 syntax: `esm link ../http2-server`,
@@ -73,4 +73,5 @@ export default class LinkCommand extends RemoteCommand {
             throw new Error(`Cannot link '${sourcePaths}': path is not a directory!`);
         }
     }
-}   
+}
+

@@ -2,6 +2,7 @@ import CLIParser from './CLIParser.mjs';
 import path from 'path';
 
 import CompleteCommand from './command/Complete.mjs';
+import DevLink from './command/DevLink.mjs';
 import HelpCommand from './command/Help.mjs';
 import LinkCommand from './command/Link.mjs';
 import NPMConvertCommand from './command/NPMConvert.mjs';
@@ -48,6 +49,7 @@ export default class CLI {
             LinkCommand,
             NPMConvertCommand,
             TestCommand,
+            DevLink,
         ].forEach((CommandConstructor) => {
             const instance = new CommandConstructor({
                 parser: this.parser,
