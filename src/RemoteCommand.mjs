@@ -22,7 +22,7 @@ export default class RemoteCommand extends Command {
         // the http 2 client creates long lasting connections, that is the reason
         // it gets instantiated here
         this.httpClient = new HTTP2Client();
-        this.httpClient.host('https://localhost:4466');
+        this.httpClient.host('https://localhost:5654');
     }
 
 
